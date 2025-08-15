@@ -57,7 +57,7 @@ const Navbar = () => {
     { to: "/", label: "Home" },
     { to: "/about", label: "About" },
     { to: "/tours", label: "Tours" },
-    { to: "/my-booking", label: "My Bookings" },
+    ...(user ? [{ to: "/my-booking", label: "My Bookings" }] : []),
   ];
 
   const isActive = (path) => location.pathname === path;
