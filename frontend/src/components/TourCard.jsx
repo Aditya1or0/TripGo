@@ -1,6 +1,6 @@
 import React from "react";
 import { House, Star } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const hoverEffect = {
@@ -14,7 +14,8 @@ const fadeIn = {
 };
 
 const TourCard = ({ tour }) => {
-  const { id, title, photo, desc, price, featured, city, avgRating } = tour;
+  const { id, title, photo, price, featured, city, avgRating } = tour;
+  const navigate = useNavigate();
 
   return (
     <motion.div
@@ -49,7 +50,7 @@ const TourCard = ({ tour }) => {
             onClick={() => scrollTo(0, 0)}
             className="text-blue-600 hover:underline"
           >
-            {title}
+            {title.slice(0, 20) + "."}
           </Link>
         </h3>
 
@@ -59,11 +60,10 @@ const TourCard = ({ tour }) => {
           </h5>
           <motion.button
             className="bg-gradient-to-b from-sky-500 to-blue-500 text-white hover:from-sky-800 hover:to-blue-700 py-2 px-4 rounded-md transition-colors"
-            onClick={() => scrollTo(0, 0)}
-            whileHover={{ scale: 1.1 }}
+            onClick={() => navigate(`/tours/${id}`)}
             whileTap={{ scale: 0.95 }}
           >
-            <Link to={`/tours/${id}`}>Book</Link>
+            {/* <Link to={`/tours/${id}`}>Book</Link> */}View
           </motion.button>
         </div>
       </div>
