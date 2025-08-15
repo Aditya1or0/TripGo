@@ -1,6 +1,8 @@
 import bookingModel from "../models/bookingModel.js";
 
-// Create a new booking
+/*
+ * Create a new booking
+ */
 export const createBooking = async (req, res) => {
   try {
     const {
@@ -14,30 +16,37 @@ export const createBooking = async (req, res) => {
       totalPrice,
     } = req.body;
 
-    // Check for missing required fields
-    if (!name || !email || !phone || !tourId || !tourTitle || !totalPrice) {
+    const userId = req.userId;
+
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !tourId ||
+      !tourTitle ||
+      !totalPrice ||
+      !userId
+    ) {
       return res
         .status(400)
         .json({ success: false, message: "Missing required fields" });
     }
 
-    // Create a new booking with the provided data
     const newBooking = new bookingModel({
+      userId,
       name,
       email,
       phone,
-      travelers: parseInt(travelers, 10), // Ensure travelers is an integer
+      travelers: parseInt(travelers, 10),
       specialRequests,
       tourId,
       tourTitle,
-      totalPrice: parseFloat(totalPrice), // Ensure totalPrice is a float
-      status: "confirmed", // Set the booking status to 'confirmed'
+      totalPrice: parseFloat(totalPrice),
+      status: "confirmed",
     });
 
-    // Save the new booking to the database
     const savedBooking = await newBooking.save();
 
-    // Respond with the saved booking information
     res.status(201).json({
       success: true,
       booking: savedBooking,
@@ -49,15 +58,15 @@ export const createBooking = async (req, res) => {
   }
 };
 
-// Get all confirmed bookings
-// Get all bookings for the logged-in user
+/*
+ * Get and show all bookings of logged in user
+ */
 export const getBookings = async (req, res) => {
   try {
-    const userId = req.userId; // Get user ID from the middleware
+    const userId = req.userId;
 
-    // Fetch only the bookings related to the logged-in user
     const bookings = await bookingModel
-      .find({ email: userId })
+      .find({ userId })
       .sort({ createdAt: -1 });
 
     res.status(200).json({ success: true, bookings });

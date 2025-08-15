@@ -2,7 +2,10 @@ import userModel from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-//register
+/*
+ * Register a new user
+ * @route POST /api/user/register
+ */
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -24,7 +27,10 @@ export const registerUser = async (req, res) => {
   }
 };
 
-//login
+/*
+ * Login a user
+ * @route POST /api/user/login
+ */
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
