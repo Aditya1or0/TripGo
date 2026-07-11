@@ -57,6 +57,7 @@ const Navbar = () => {
     { to: "/", label: "Home" },
     { to: "/about", label: "About" },
     { to: "/tours", label: "Tours" },
+    { to: "/admin", label: "Book Now" },
     ...(user ? [{ to: "/my-booking", label: "My Bookings" }] : []),
   ];
 
