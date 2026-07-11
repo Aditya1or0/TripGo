@@ -1,4 +1,4 @@
-# TripGo - Travel Agency Booking System
+# TripGo - Travel Agency Booking System Platform
 
 Welcome to the TripGo repository! This project is a Travel Agency Booking System designed to help customers easily explore and book exciting travel packages. It provides a user-friendly interface for customers to view available packages, book their trips, and receive basic invoices for their bookings.
 
