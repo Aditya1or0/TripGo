@@ -7,3 +7,49 @@
 *{
   font-family: "Outfit", sans-serif;
 }
+
+@layer utilities {
+  .bg-tripgo-gradient {
+    background: linear-gradient(135deg, #1D70B8 0%, #0284C7 45%, #14B8A6 100%);
+  }
+
+  .bg-tripgo-gradient-hover {
+    background: linear-gradient(135deg, #185ea0 0%, #0274af 45%, #0f9f8f 100%);
+  }
+
+  .text-tripgo-gradient {
+    background: linear-gradient(135deg, #1D70B8 0%, #0284C7 45%, #14B8A6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-tripgo-glow {
+    background: linear-gradient(135deg, #38bdf8 0%, #2dd4bf 50%, #a7f3d0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .glow-brand {
+    box-shadow: 0 0 25px rgba(2, 132, 199, 0.25);
+  }
+
+  .glow-teal {
+    box-shadow: 0 0 25px rgba(20, 184, 166, 0.25);
+  }
+
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

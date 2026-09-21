@@ -8,13 +8,15 @@ import NewsLetterBox from "../components/NewsLetterBox";
 
 const Home = () => {
   return (
-    <div>
+    <div className="w-full">
       <Header />
-      <SearchBar />
-      <Services />
-      <AllTours />
-      <Experience />
-      <NewsLetterBox />
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-10 space-y-12 sm:space-y-20 py-8">
+        <SearchBar />
+        <Services />
+        <AllTours />
+        <Experience />
+        <NewsLetterBox />
+      </div>
     </div>
   );
 };

@@ -19,6 +19,24 @@ const AppContextProvider = (props) => {
     }
   }, []);
 
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("tripgo_theme") || "dark";
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    localStorage.setItem("tripgo_theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -34,6 +52,9 @@ const AppContextProvider = (props) => {
     setToken,
     backendUrl,
     logout,
+    theme,
+    setTheme,
+    toggleTheme,
   };
 
   return (

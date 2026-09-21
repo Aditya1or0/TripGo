@@ -3,9 +3,7 @@ import instagram_icon from "./instagram_icon.svg";
 import twitter_icon from "./twitter_icon.svg";
 import earth from "./earth.png";
 import headerimg from "./headerimg.png";
-import dubaiSkyline from "./dubai-skyline.png";
 import logo from "./logo.png";
-import logodark from "./logodark.png";
 
 import { Compass, MapPin, UsersRound } from "lucide-react";
 import user from "./profile_icon.png";
@@ -16,10 +14,8 @@ export const assets = {
   twitter_icon,
   earth,
   headerimg,
-  dubaiSkyline,
-  logo,
-  logodark,
   user,
+  logo,
 };
 
 export const stepsData = [

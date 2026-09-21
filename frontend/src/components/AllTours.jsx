@@ -5,28 +5,30 @@ import TourList from "./TourList";
 const AllTours = () => {
   return (
     <motion.div
-      className="flex flex-col justify-center items-center my-24 p-6 md:px-28"
+      className="flex flex-col justify-center items-center my-16 sm:my-20 p-4"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1, ease: "easeInOut" }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
       viewport={{ once: true }}
     >
-      <motion.h1
-        className="text-3xl sm:text-4xl font-semibold mb-4 text-center text-gray-800"
-        initial={{ opacity: 0, y: -30 }}
+      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-white/10 border border-blue-100 dark:border-white/15 text-brand-blue dark:text-cyan-300 text-xs font-semibold uppercase tracking-wider mb-3">
+        Handpicked Getaways
+      </div>
+      <motion.h2
+        className="text-3xl sm:text-4xl font-extrabold mb-3 text-center text-slate-900 dark:text-white tracking-tight"
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.8 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
       >
-        Our Featured <span className="text-blue-500">Tours</span>
-      </motion.h1>
+        Our Featured <span className="text-tripgo-gradient">Tours</span>
+      </motion.h2>
       <motion.p
-        className="text-lg text-gray-600 mb-12 text-center max-w-2xl"
+        className="text-base sm:text-lg text-slate-500 dark:text-slate-400 mb-10 text-center max-w-2xl"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.8 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
       >
-        Unforgettable Journeys Tailored to Your Interests. Explore the world in
-        the most beautiful and luxurious ways possible.
+        Unforgettable journeys tailored to your interests. Explore the world in the most beautiful and luxurious ways possible.
       </motion.p>
       <TourList />
     </motion.div>

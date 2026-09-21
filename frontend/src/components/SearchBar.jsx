@@ -5,47 +5,60 @@ import { motion } from "framer-motion";
 const SearchBar = () => {
   return (
     <motion.div
-      className="flex flex-col items-center justify-center my-32"
-      initial={{ opacity: 0.2, y: 100 }}
+      className="flex flex-col items-center justify-center my-12 sm:my-16"
+      initial={{ opacity: 0.2, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1, ease: "easeInOut" }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
       viewport={{ once: true }}
     >
-      <h1 className="text-3xl sm:text-4xl font-semibold mb-2 text-center">
-        Find Your Perfect <span className="text-blue-500">Destination</span>
-      </h1>
-      <p className="text-center text-lg text-gray-600 mb-8">
-        Discover Destinations Based on Your Interests
+      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-white/10 border border-blue-100 dark:border-white/15 text-brand-blue dark:text-cyan-300 text-xs font-semibold uppercase tracking-wider mb-3">
+        Seamless Experience
+      </div>
+
+      <h2 className="text-3xl sm:text-4xl font-extrabold mb-3 text-center text-slate-900 dark:text-white tracking-tight">
+        Plan in 3 Simple Steps with{" "}
+        <span className="text-tripgo-gradient">TripGo</span>
+      </h2>
+      <p className="text-center text-base sm:text-lg text-slate-500 dark:text-slate-400 max-w-xl mb-10">
+        Everything you need to discover, customize, and embark on your dream journey.
       </p>
 
       <motion.div
-        className="space-y-4 w-full max-w-3xl text-sm"
+        className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl"
         initial="hidden"
-        animate="show"
+        whileInView="show"
+        viewport={{ once: true }}
         variants={{
-          hidden: { opacity: 0, y: 50 },
+          hidden: { opacity: 0, y: 30 },
           show: {
             opacity: 1,
             y: 0,
-            transition: { staggerChildren: 0.3, duration: 0.8 },
+            transition: { staggerChildren: 0.2, duration: 0.6 },
           },
         }}
       >
         {stepsData.map((item, index) => (
           <motion.div
             key={index}
-            className="flex items-center gap-4 p-5 px-8 bg-white/20 shadow-md border cursor-pointer rounded-lg"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
-            whileTap={{ scale: 0.98 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
+            className="group relative flex flex-col p-6 bg-white dark:bg-[#181818] hover:bg-gradient-to-b hover:from-white hover:to-blue-50/30 dark:hover:to-white/5 rounded-2xl border border-slate-200/80 dark:border-white/10 hover:border-cyan-200/60 shadow-sm hover:shadow-xl hover:shadow-cyan-900/5 transition-all duration-300"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              show: { opacity: 1, y: 0 },
+            }}
+            whileHover={{ y: -4 }}
           >
-            <item.icon className="text-blue-500 w-6 h-6" />
-            <div>
-              <h2 className="text-xl font-medium">{item.title}</h2>
-              <p className="mt-2 text-gray-500">{item.description}</p>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-brand-blue/10 via-brand-cyan/10 to-brand-teal/10 flex items-center justify-center text-brand-blue dark:text-cyan-400 mb-4 group-hover:scale-110 group-hover:bg-tripgo-gradient group-hover:text-white transition-all duration-300 shadow-xs">
+              <item.icon className="w-6 h-6 transition-colors" />
             </div>
+            
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-bold text-slate-400">0{index + 1}.</span>
+              <h3 className="text-lg font-bold text-slate-800 dark:text-white">{item.title}</h3>
+            </div>
+            
+            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              {item.description}
+            </p>
           </motion.div>
         ))}
       </motion.div>
