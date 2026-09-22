@@ -12,6 +12,10 @@ export default {
           dark: "#070E1A",
           navy: "#0C1E38",
         },
+        muted: {
+          DEFAULT: "#f1f5f9",
+          foreground: "#94a3b8",
+        },
       },
     },
   },

@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className="w-full">
       <Header />
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-10 space-y-12 sm:space-y-20 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-10 space-y-20 sm:space-y-28 py-16 sm:py-24">
         <SearchBar />
         <Services />
         <AllTours />

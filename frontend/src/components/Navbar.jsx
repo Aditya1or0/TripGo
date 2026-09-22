@@ -74,7 +74,7 @@ const Navbar = () => {
             ? isHome
               ? "bg-transparent py-2"
               : "bg-[#111]/85 backdrop-blur-sm py-2 border-b border-white/10"
-            : "bg-white/90 backdrop-blur-md py-2 border-b border-slate-200/70 shadow-xs"
+            : "bg-transparent backdrop-blur-md py-2 border-b border-slate-200/70 shadow-xs"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,7 +93,7 @@ const Navbar = () => {
             </Link>
 
             {/* 2. Center: Rectangle Bar for Navigation Items */}
-            <div className="hidden md:flex items-center">
+            {/* <div className="hidden md:flex items-center">
               <nav
                 className={`flex items-center gap-1 px-2 py-1 rounded-xl border transition-all duration-300 ${
                   theme === "dark"
@@ -127,27 +127,42 @@ const Navbar = () => {
                   );
                 })}
               </nav>
-            </div>
+            </div> */}
 
             {/* 3. Right: Theme Toggle & Auth / Action Button */}
             <div className="hidden md:flex items-center space-x-2.5">
-              {/* Direct Dark/Light Mode Toggle (shadcn style, no switcher dropdown) */}
+              {/* Unique Luxury Theme Toggle Capsule */}
               <button
                 type="button"
                 onClick={toggleTheme}
                 title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
                 aria-label="Toggle theme"
-                className={`p-1.5 rounded-lg border transition-all duration-200 flex items-center justify-center ${
+                className={`relative w-14 h-7 rounded-full p-0.5 transition-all duration-300 flex items-center cursor-pointer border select-none ${
                   theme === "dark"
-                    ? "bg-[#222] border-white/20 text-amber-400 hover:bg-[#2d2d2d]"
-                    : "bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200"
+                    ? "bg-[#161616] border-white/20 shadow-inner shadow-black/50"
+                    : "bg-gradient-to-r from-amber-100 to-sky-100 border-amber-300/60 shadow-inner"
                 }`}
               >
-                {theme === "dark" ? (
-                  <Sun className="w-4 h-4 transition-transform hover:rotate-45" />
-                ) : (
-                  <Moon className="w-4 h-4 transition-transform hover:-rotate-12" />
-                )}
+                {/* Background micro hints */}
+                <div className="absolute inset-0 flex items-center justify-between px-1.5 pointer-events-none">
+                  <Sun className={`w-3 h-3 text-amber-500 transition-opacity duration-300 ${theme === "dark" ? "opacity-30" : "opacity-0"}`} />
+                  <Moon className={`w-3 h-3 text-cyan-300 transition-opacity duration-300 ${theme === "dark" ? "opacity-0" : "opacity-30"}`} />
+                </div>
+
+                {/* Sliding thumb with icon */}
+                <div
+                  className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 shadow-md transform ${
+                    theme === "dark"
+                      ? "translate-x-6.5 bg-[#252525] text-cyan-300 border border-cyan-500/40 shadow-cyan-500/25"
+                      : "translate-x-0 bg-white text-amber-500 border border-amber-300 shadow-amber-500/25"
+                  }`}
+                >
+                  {theme === "dark" ? (
+                    <Moon className="w-3.5 h-3.5 fill-cyan-400/20" />
+                  ) : (
+                    <Sun className="w-3.5 h-3.5 fill-amber-400/20" />
+                  )}
+                </div>
               </button>
 
               {user ? (
@@ -217,17 +232,25 @@ const Navbar = () => {
                 onClick={toggleTheme}
                 title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
                 aria-label="Toggle theme"
-                className={`p-2 rounded-xl border transition-all duration-200 flex items-center justify-center ${
+                className={`relative w-13 h-7 rounded-full p-0.5 transition-all duration-300 flex items-center cursor-pointer border select-none ${
                   theme === "dark"
-                    ? "bg-[#222] border-white/20 text-amber-400 hover:bg-[#2d2d2d]"
-                    : "bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200"
+                    ? "bg-[#161616] border-white/20 shadow-inner shadow-black/50"
+                    : "bg-gradient-to-r from-amber-100 to-sky-100 border-amber-300/60 shadow-inner"
                 }`}
               >
-                {theme === "dark" ? (
-                  <Sun className="w-4 h-4 transition-transform hover:rotate-45" />
-                ) : (
-                  <Moon className="w-4 h-4 transition-transform hover:-rotate-12" />
-                )}
+                <div
+                  className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 shadow-md transform ${
+                    theme === "dark"
+                      ? "translate-x-5.5 bg-[#252525] text-cyan-300 border border-cyan-500/40"
+                      : "translate-x-0 bg-white text-amber-500 border border-amber-300"
+                  }`}
+                >
+                  {theme === "dark" ? (
+                    <Moon className="w-3.5 h-3.5 fill-cyan-400/20" />
+                  ) : (
+                    <Sun className="w-3.5 h-3.5 fill-amber-400/20" />
+                  )}
+                </div>
               </button>
 
               {user && (
@@ -260,7 +283,7 @@ const Navbar = () => {
         <div className="md:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm">
           <div className="fixed top-16 left-4 right-4 bg-white/95 dark:bg-[#1c1c1c]/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200 dark:border-white/10 mobile-menu-container overflow-hidden p-4 space-y-3">
             {/* Centered Rectangle Bar inside Mobile */}
-            <div className="p-2 bg-slate-50 dark:bg-[#252525] rounded-xl space-y-1 border border-slate-100 dark:border-white/5">
+            {/* <div className="p-2 bg-slate-50 dark:bg-[#252525] rounded-xl space-y-1 border border-slate-100 dark:border-white/5">
               {navLinks.map((link) => (
                 <Link
                   key={link.to}
@@ -282,7 +305,7 @@ const Navbar = () => {
                   )}
                 </Link>
               ))}
-            </div>
+            </div> */}
 
             {/* Mobile Auth */}
             <div className="pt-2 border-t border-slate-100 dark:border-white/10">
