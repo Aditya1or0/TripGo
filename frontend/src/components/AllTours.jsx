@@ -5,8 +5,8 @@ import TourList from "./TourList";
 const AllTours = () => {
   return (
     <motion.div
-      className="flex flex-col justify-center items-center my-16 sm:my-20 p-4"
-      initial={{ opacity: 0, y: 50 }}
+      className="flex flex-col justify-center items-center w-full"
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
       viewport={{ once: true }}

@@ -15,12 +15,10 @@ import {
   ArrowRight,
   ShieldCheck,
   ArrowLeft,
-  Sun,
-  Moon,
 } from "lucide-react";
 
 const LoginPage = () => {
-  const { backendUrl, setToken, setUser, theme, toggleTheme } = useContext(AppContext);
+  const { backendUrl, setToken, setUser, theme } = useContext(AppContext);
   const location = useLocation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -100,8 +98,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="relative h-screen max-h-screen w-full overflow-hidden select-none bg-[#000000] flex flex-col justify-between p-4 sm:p-6 lg:p-8">
-      {/* 1. Whole Page Background: React Bits Ravine (Ray-Marched Canyon Shader Flight) */}
+    <div
+      className={`relative h-screen max-h-screen w-full overflow-hidden select-none flex flex-col justify-between p-4 sm:p-6 lg:p-8 transition-colors duration-300 ${
+        theme === "dark"
+          ? "bg-[#000000]"
+          : "bg-gradient-to-b from-[#e8f4fd] via-[#f4f9fd] to-[#ffffff]"
+      }`}
+    >
+      {/* 1. Whole Page Background: React Bits Ravine with adaptive light/dark colors */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <Ravine
           speed={0.8}
@@ -116,41 +120,37 @@ const LoginPage = () => {
           tilt={0.05}
           roll={0.075}
           fov={1.0}
-          nearColor="#000000"
-          farColor="#ffffff"
-          brightness={0.85}
-          contrast={1.0}
+          nearColor={theme === "dark" ? "#000000" : "#ffffff"}
+          farColor={theme === "dark" ? "#ffffff" : "#0284c7"}
+          brightness={theme === "dark" ? 0.85 : 0.95}
+          contrast={theme === "dark" ? 1.0 : 1.1}
           grain={0.005}
           className="w-full h-full"
         />
       </div>
 
-      {/* Subtle Dark Vignette Overlay for Crisp Contrast */}
-      <div className="absolute inset-0 z-0 pointer-events-none bg-radial from-black/20 via-black/40 to-black/80" />
+      {/* Subtle Vignette Overlay for Crisp Contrast */}
+      <div
+        className={`absolute inset-0 z-0 pointer-events-none transition-all duration-300 ${
+          theme === "dark"
+            ? "bg-radial from-black/20 via-black/40 to-black/80"
+            : "bg-radial from-transparent via-sky-100/20 to-sky-200/40"
+        }`}
+      />
 
-      {/* 2. Top Header Controls: Back to Home & Theme Switcher */}
+      {/* 2. Top Header Controls: Back to Home (Theme Switcher removed as requested) */}
       <header className="relative z-10 w-full max-w-6xl mx-auto flex items-center justify-between">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/40 hover:bg-black/65 backdrop-blur-xl border border-white/15 text-slate-200 hover:text-white text-xs sm:text-sm font-semibold transition-all group shadow-lg shadow-black/40"
+          className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl backdrop-blur-xl border text-xs sm:text-sm font-semibold transition-all group shadow-md ${
+            theme === "dark"
+              ? "bg-black/40 hover:bg-black/65 border-white/15 text-slate-200 hover:text-white shadow-black/40"
+              : "bg-white/80 hover:bg-white border-slate-200/90 text-slate-700 hover:text-slate-900 shadow-slate-900/5"
+          }`}
         >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform text-cyan-400" />
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform text-brand-teal" />
           <span>Back to Home</span>
         </Link>
-
-        <button
-          type="button"
-          onClick={toggleTheme}
-          title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          aria-label="Toggle theme"
-          className="p-2.5 rounded-xl bg-black/40 hover:bg-black/65 backdrop-blur-xl border border-white/15 text-amber-400 hover:text-amber-300 transition-all flex items-center justify-center shadow-lg shadow-black/40"
-        >
-          {theme === "dark" ? (
-            <Sun className="w-4 h-4 transition-transform hover:rotate-45" />
-          ) : (
-            <Moon className="w-4 h-4 transition-transform hover:-rotate-12" />
-          )}
-        </button>
       </header>
 
       {/* 3. Middle: Perfectly Centered Glassmorphic Auth Card */}
@@ -159,7 +159,11 @@ const LoginPage = () => {
           initial={{ opacity: 0, y: 20, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="w-full bg-[#111111]/85 dark:bg-[#0c0c0c]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/90 border border-white/15"
+          className={`w-full backdrop-blur-2xl rounded-3xl p-6 sm:p-8 shadow-2xl transition-all duration-300 border ${
+            theme === "dark"
+              ? "bg-[#0e0e0e]/90 border-white/15 shadow-black/90"
+              : "bg-white/90 border-slate-200/90 shadow-slate-900/10"
+          }`}
         >
           {/* Brand Logo & Heading */}
           <div className="text-center mb-4">
@@ -168,15 +172,23 @@ const LoginPage = () => {
               className="inline-flex items-center justify-center transition-transform hover:scale-105 duration-200"
             >
               <img
-                src={assets.logo}
+                src={currentLogo}
                 alt="TripGo"
                 className="h-9 sm:h-10 w-auto object-contain drop-shadow"
               />
             </Link>
-            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight mt-2.5">
+            <h2
+              className={`text-xl sm:text-2xl font-black tracking-tight mt-2.5 ${
+                theme === "dark" ? "text-white" : "text-slate-900"
+              }`}
+            >
               {isLogin ? "Welcome Back" : "Begin Your Journey"}
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
+            <p
+              className={`text-xs mt-1 ${
+                theme === "dark" ? "text-slate-400" : "text-slate-500"
+              }`}
+            >
               {isLogin
                 ? "Sign in to manage your bookings and explore tours"
                 : "Create an account to unlock exclusive travel packages"}
@@ -184,14 +196,24 @@ const LoginPage = () => {
           </div>
 
           {/* Segmented Tab Switcher: Sign In / Sign Up */}
-          <div className="grid grid-cols-2 p-1 rounded-xl bg-white/10 border border-white/10 mb-4">
+          <div
+            className={`grid grid-cols-2 p-1 rounded-xl mb-4 border transition-colors ${
+              theme === "dark"
+                ? "bg-white/10 border-white/10"
+                : "bg-slate-100 border-slate-200/80"
+            }`}
+          >
             <button
               type="button"
               onClick={() => setIsLogin(true)}
-              className={`py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
+              className={`py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                 isLogin
-                  ? "bg-white/20 text-white shadow-xs"
-                  : "text-slate-400 hover:text-white"
+                  ? theme === "dark"
+                    ? "bg-white/20 text-white shadow-xs"
+                    : "bg-white text-brand-blue shadow-xs"
+                  : theme === "dark"
+                  ? "text-slate-400 hover:text-white"
+                  : "text-slate-500 hover:text-slate-900"
               }`}
             >
               Sign In
@@ -199,10 +221,14 @@ const LoginPage = () => {
             <button
               type="button"
               onClick={() => setIsLogin(false)}
-              className={`py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
+              className={`py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                 !isLogin
-                  ? "bg-white/20 text-white shadow-xs"
-                  : "text-slate-400 hover:text-white"
+                  ? theme === "dark"
+                    ? "bg-white/20 text-white shadow-xs"
+                    : "bg-white text-brand-blue shadow-xs"
+                  : theme === "dark"
+                  ? "text-slate-400 hover:text-white"
+                  : "text-slate-500 hover:text-slate-900"
               }`}
             >
               Sign Up
@@ -223,7 +249,9 @@ const LoginPage = () => {
                 >
                   <label
                     htmlFor="name"
-                    className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider"
+                    className={`block text-[11px] font-bold uppercase tracking-wider ${
+                      theme === "dark" ? "text-slate-300" : "text-slate-700"
+                    }`}
                   >
                     Full Name
                   </label>
@@ -235,7 +263,11 @@ const LoginPage = () => {
                       name="name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white placeholder:text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue transition-all"
+                      className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue ${
+                        theme === "dark"
+                          ? "bg-black/40 border-white/15 text-white placeholder:text-slate-500"
+                          : "bg-slate-50 hover:bg-slate-100/60 focus:bg-white border-slate-200 text-slate-900 placeholder:text-slate-400"
+                      }`}
                       placeholder="e.g. Alex Morgan"
                     />
                   </div>
@@ -247,7 +279,9 @@ const LoginPage = () => {
             <div className="space-y-1">
               <label
                 htmlFor="email"
-                className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider"
+                className={`block text-[11px] font-bold uppercase tracking-wider ${
+                  theme === "dark" ? "text-slate-300" : "text-slate-700"
+                }`}
               >
                 Email Address
               </label>
@@ -259,7 +293,11 @@ const LoginPage = () => {
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white placeholder:text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue transition-all"
+                  className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue ${
+                    theme === "dark"
+                      ? "bg-black/40 border-white/15 text-white placeholder:text-slate-500"
+                      : "bg-slate-50 hover:bg-slate-100/60 focus:bg-white border-slate-200 text-slate-900 placeholder:text-slate-400"
+                  }`}
                   placeholder="name@example.com"
                   required
                 />
@@ -271,12 +309,20 @@ const LoginPage = () => {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider"
+                  className={`block text-[11px] font-bold uppercase tracking-wider ${
+                    theme === "dark" ? "text-slate-300" : "text-slate-700"
+                  }`}
                 >
                   Password
                 </label>
                 {isLogin && (
-                  <span className="text-xs text-cyan-400 hover:text-cyan-300 cursor-pointer font-medium transition-colors">
+                  <span
+                    className={`text-xs font-semibold cursor-pointer transition-colors ${
+                      theme === "dark"
+                        ? "text-cyan-400 hover:text-cyan-300"
+                        : "text-brand-blue hover:text-brand-cyan"
+                    }`}
+                  >
                     Forgot?
                   </span>
                 )}
@@ -289,14 +335,22 @@ const LoginPage = () => {
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white placeholder:text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue transition-all"
+                  className={`w-full pl-10 pr-10 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue ${
+                    theme === "dark"
+                      ? "bg-black/40 border-white/15 text-white placeholder:text-slate-500"
+                      : "bg-slate-50 hover:bg-slate-100/60 focus:bg-white border-slate-200 text-slate-900 placeholder:text-slate-400"
+                  }`}
                   placeholder="••••••••"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="p-1.5 text-slate-400 hover:text-white absolute right-2.5 transition-colors"
+                  className={`p-1.5 absolute right-2.5 transition-colors ${
+                    theme === "dark"
+                      ? "text-slate-400 hover:text-white"
+                      : "text-slate-400 hover:text-slate-700"
+                  }`}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
@@ -326,13 +380,25 @@ const LoginPage = () => {
           </form>
 
           {/* Bottom Switch Link */}
-          <div className="mt-4 pt-3 border-t border-white/10 text-center">
-            <p className="text-xs text-slate-400">
+          <div
+            className={`mt-4 pt-3 text-center border-t ${
+              theme === "dark" ? "border-white/10" : "border-slate-100"
+            }`}
+          >
+            <p
+              className={`text-xs ${
+                theme === "dark" ? "text-slate-400" : "text-slate-500"
+              }`}
+            >
               {isLogin ? "New to TripGo?" : "Already have an account?"}{" "}
               <button
                 type="button"
                 onClick={() => setIsLogin(!isLogin)}
-                className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors cursor-pointer"
+                className={`font-bold transition-colors cursor-pointer ${
+                  theme === "dark"
+                    ? "text-cyan-400 hover:text-cyan-300"
+                    : "text-brand-blue hover:text-brand-cyan"
+                }`}
               >
                 {isLogin ? "Create an account" : "Sign in"}
               </button>
@@ -340,15 +406,23 @@ const LoginPage = () => {
           </div>
 
           {/* Security Badge */}
-          <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+          <div
+            className={`mt-3 flex items-center justify-center gap-1.5 text-[11px] font-medium ${
+              theme === "dark" ? "text-slate-400" : "text-slate-500"
+            }`}
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
             <span>256-bit encrypted & secure travel platform</span>
           </div>
         </motion.div>
       </main>
 
       {/* 4. Bottom Footer Note */}
-      <footer className="relative z-10 w-full text-center text-[11px] text-slate-500 py-1">
+      <footer
+        className={`relative z-10 w-full text-center text-[11px] py-1 ${
+          theme === "dark" ? "text-slate-500" : "text-slate-400"
+        }`}
+      >
         &copy; {new Date().getFullYear()} TripGo. All Rights Reserved.
       </footer>
     </div>

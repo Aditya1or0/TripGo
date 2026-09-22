@@ -12,7 +12,7 @@ const NewsLetterBox = () => {
 
   return (
     <motion.div
-      className="my-16 sm:my-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-blue-50/60 to-white dark:from-[#1c1c1c] dark:to-[#141414] border border-slate-200/80 dark:border-white/10 text-center relative overflow-hidden shadow-sm"
+      className="w-full p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-blue-50/60 to-white dark:from-[#1c1c1c] dark:to-[#141414] border border-slate-200/80 dark:border-white/10 text-center relative overflow-hidden shadow-sm"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}

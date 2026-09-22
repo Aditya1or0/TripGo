@@ -1,17 +1,7 @@
 import React from "react";
-import { MapPin, Star } from "lucide-react";
+import { MapPin, Star, ArrowRight } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-
-const hoverEffect = {
-  y: -5,
-  transition: { duration: 0.25 },
-};
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
 
 const TourCard = ({ tour }) => {
   const { id, title, photo, price, featured, city, avgRating } = tour;
@@ -19,37 +9,50 @@ const TourCard = ({ tour }) => {
 
   return (
     <motion.div
-      className="bg-white dark:bg-[#181818] border border-slate-200/80 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-cyan-900/5 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col h-full group"
-      whileHover={hoverEffect}
-      initial="hidden"
-      animate="visible"
-      variants={fadeIn}
+      className="bg-white dark:bg-[#161616] border border-slate-200/80 dark:border-white/10 hover:border-cyan-400/50 dark:hover:border-cyan-400/30 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-cyan-950/20 transition-all duration-500 flex flex-col h-full group"
+      whileHover={{ y: -6 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
     >
-      <div className="relative overflow-hidden aspect-[4/3]">
+      {/* Visual Image Header */}
+      <div className="relative overflow-hidden aspect-[16/11]">
         <img
           src={photo}
           alt={title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
         />
+
+        {/* Ambient Bottom Scrim Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent pointer-events-none" />
+
+        {/* Featured Tag */}
         {featured && (
-          <span className="absolute top-3 left-3 bg-tripgo-gradient text-white py-1 px-3 rounded-full text-xs font-bold shadow-md shadow-brand-blue/30">
+          <span className="absolute top-3.5 left-3.5 bg-tripgo-gradient text-white py-1 px-3 rounded-full text-[11px] font-extrabold uppercase tracking-wider shadow-md shadow-brand-blue/30">
             Featured
           </span>
         )}
-        <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md text-white px-2.5 py-1 rounded-xl text-xs font-semibold flex items-center gap-1 shadow-sm">
+
+        {/* City / Location Pill */}
+        <div className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-md border border-white/15 text-white px-2.5 py-1 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm">
+          <MapPin className="w-3.5 h-3.5 text-brand-teal" />
+          <span>{city}</span>
+        </div>
+
+        {/* Rating Badge */}
+        <div className="absolute bottom-3 right-3 bg-black/50 backdrop-blur-md border border-white/15 text-white px-2.5 py-1 rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm">
           <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
           <span>{avgRating || "4.8"}</span>
         </div>
       </div>
 
-      <div className="p-5 flex flex-col flex-1 justify-between">
+      {/* Card Body */}
+      <div className="p-5 flex flex-col flex-1 justify-between gap-4">
         <div>
-          <div className="flex items-center text-slate-500 dark:text-slate-400 text-xs font-medium mb-1.5 gap-1">
-            <MapPin className="w-3.5 h-3.5 text-brand-teal" />
-            <span>{city}</span>
-          </div>
-
-          <h3 className="text-base sm:text-lg font-bold text-slate-800 dark:text-white mb-3 group-hover:text-brand-blue transition-colors line-clamp-1">
+          <span className="text-[11px] font-bold text-brand-teal uppercase tracking-wider">
+            Curated Itinerary
+          </span>
+          <h3 className="text-base sm:text-lg font-bold text-slate-800 dark:text-white mt-1 group-hover:text-brand-blue dark:group-hover:text-cyan-300 transition-colors line-clamp-1">
             <Link
               to={`/tours/${id}`}
               onClick={() => window.scrollTo(0, 0)}
@@ -59,21 +62,23 @@ const TourCard = ({ tour }) => {
           </h3>
         </div>
 
+        {/* Price & Action Button */}
         <div className="flex justify-between items-center pt-3 border-t border-slate-100 dark:border-white/10">
           <div>
-            <p className="text-[11px] text-slate-400 uppercase font-semibold">Starting at</p>
-            <h5 className="text-lg font-black text-slate-900 dark:text-white">
+            <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Starting at</p>
+            <h5 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
               ₹{price?.toLocaleString()}{" "}
               <span className="text-xs font-normal text-slate-400">/person</span>
             </h5>
           </div>
-          <motion.button
-            className="bg-tripgo-gradient text-white text-xs sm:text-sm font-semibold py-2 px-4 rounded-xl shadow-sm shadow-brand-blue/20 hover:shadow-md hover:shadow-cyan-500/25 transition-all"
+          
+          <button
             onClick={() => navigate(`/tours/${id}`)}
-            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-1.5 bg-tripgo-gradient hover:bg-tripgo-gradient-hover text-white text-xs sm:text-sm font-bold py-2.5 px-4 rounded-xl shadow-md shadow-brand-blue/20 hover:shadow-cyan-500/30 transition-all group/btn"
           >
-            Explore
-          </motion.button>
+            <span>Explore</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+          </button>
         </div>
       </div>
     </motion.div>
